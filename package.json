@@ -7,7 +7,9 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "up": "sudo docker-compose up",
+    "down": "sudo docker-compose down"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
