@@ -2,6 +2,24 @@ import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
 
+function Card() {
+  return (
+    <div className="flex flex-row gap-2 rounded-lg">
+      <div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" />
+      </div>
+      <div>
+        <p>Era:</p>
+        <p>Black</p>
+        <p>Type:</p>
+        <p>Spades</p>
+        <p>Name:</p>
+        <p>Ace</p>
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
@@ -20,10 +38,11 @@ export default function Home() {
           <button type="button" className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Electronics</button>
           <button type="button" className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Gaming</button>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 p-10">
-          <div>
-            <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" alt="" />
-          </div>
+        <div className="grid grid-cols-2 p-5 gap-4 md:grid-cols-5 md:p-10">
+          <Card />
+          {/*<div>
+            <img className="h-auto max-w-full rounded-lg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" alt="" />
+          </div>*/}
           <div>
             <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" />
           </div>
