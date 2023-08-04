@@ -4,10 +4,8 @@ import { api } from "~/utils/api";
 
 function Card() {
   return (
-    <div className="flex flex-row gap-2 rounded-lg">
-      <div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" />
-      </div>
+    <div className="flex flex-row gap-2 rounded-lg border aspect-video">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" className="object-contain"/>
       <div>
         <p>Era:</p>
         <p>Black</p>
@@ -38,7 +36,7 @@ export default function Home() {
           <button type="button" className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Electronics</button>
           <button type="button" className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Gaming</button>
         </div>
-        <div className="grid grid-cols-2 p-5 gap-4 md:grid-cols-5 md:p-10">
+        <div className="grid grid-cols-2 p-5 gap-4 md:grid-cols-6 md:p-16">
           <Card />
           {/*<div>
             <img className="h-auto max-w-full rounded-lg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" alt="" />
