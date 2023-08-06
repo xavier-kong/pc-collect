@@ -5,15 +5,13 @@ import { api } from "~/utils/api";
 function Card() {
 
   return (
-    <div className="flex flex-row gap-2 rounded-lg border aspect-video">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" className="object-contain h-auto max-w-full rounded-lg"/>
-      <div>
-        <p>Era:</p>
-        <p>Black</p>
-        <p>Type:</p>
-        <p>Spades</p>
-        <p>Name:</p>
-        <p>Ace</p>
+    <div className="flex md:flex-row flex-col gap-2 rounded-lg border md:h-36 md:w-52 h-14 w-14">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" className="object-contain h-14 max-w-full rounded-lg"/>
+      <div className="">
+        <p>Era: Black</p>
+        <p>Type: Inclusion</p>
+        <p>Shop: Bicycle</p>
+        <p>Name: Ace</p>
       </div>
     </div>
   )
@@ -30,7 +28,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
-        <div className="grid grid-cols-2 p-5 gap-4 md:grid-cols-6 md:p-16">
+        <div className="grid grid-cols-4 p-5 gap-4 md:grid-cols-6 md:p-16">
           {
             Array(100).fill(0).map((i: number) => <Card key={i}/>)
           }
