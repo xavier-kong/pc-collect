@@ -9,6 +9,17 @@ import {
   DialogTrigger,
 } from "../components/ui/dialog"
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu"
+
+import { DotsVerticalIcon } from "@radix-ui/react-icons"
+
 function Card() {
   const era = 'black';
   const type = 'inclusion';
@@ -16,10 +27,9 @@ function Card() {
   const name = 'ace';
 
   return (
-    <div className="rounded-lg md:border md:h-36 md:w-52 h-14 w-14">
-
+    <div className="rounded-lg md:border md:h-36 md:w-64 h-14 w-14">
       <div className="hidden md:block">
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 group">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" className="object-contain h-14 max-w-full md:h-36 rounded-lg"/>
           <div>
             <p>Era: {era}</p>
@@ -27,6 +37,22 @@ function Card() {
             <p>Shop: {shop}</p>
             <p>Name: {name}</p>
           </div>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>          
+              <div className="group-hover:block hidden">
+                <DotsVerticalIcon />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
