@@ -37,22 +37,23 @@ function Card() {
             <p>Shop: {shop}</p>
             <p>Name: {name}</p>
           </div>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger>          
-              <div className="group-hover:block hidden">
-                <DotsVerticalIcon />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="p-1">
+            <DropdownMenu>
+              <DropdownMenuTrigger>          
+                <div className="group-hover:block hidden">
+                  <DotsVerticalIcon className="scale-150 border-none" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Collected</DropdownMenuItem>
+                <DropdownMenuItem>On The Way</DropdownMenuItem>
+                <DropdownMenuItem>Looking</DropdownMenuItem>
+                <DropdownMenuItem>Wishlist</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
 
