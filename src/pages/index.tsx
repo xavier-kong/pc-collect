@@ -19,6 +19,7 @@ import {
 } from "../components/ui/dropdown-menu"
 
 import { DotsVerticalIcon } from "@radix-ui/react-icons"
+import { Button } from "~/components/ui/button";
 
 function Card() {
   const era = 'black';
@@ -66,10 +67,20 @@ function Card() {
             <DialogHeader>
               <DialogTitle>Card Info</DialogTitle>
               <DialogDescription>
-                <p>Era: {era}</p>
-                <p>Type: {type}</p>
-                <p>Shop: {shop}</p>
-                <p>Name: {name}</p>
+                <div className="flex flex-row gap-4">
+                  <div className="pr-6">
+                    <p>Era: {era}</p>
+                    <p>Type: {type}</p>
+                    <p>Shop: {shop}</p>
+                    <p>Name: {name}</p>
+                  </div>
+                  <div className="pl-6 flex flex-col">
+                    <Button>Collected</Button>
+                    <Button>On The Way</Button>
+                    <Button>Looking</Button>
+                    <Button>Wishlist</Button>
+                  </div>
+                </div>
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
