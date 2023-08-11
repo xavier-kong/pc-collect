@@ -20,12 +20,26 @@ import {
 
 import { DotsVerticalIcon } from "@radix-ui/react-icons"
 import { Button } from "~/components/ui/button";
+import { useState } from "react";
+
+type CardStatus = 'collected' | 'otw' | 'looking' | 'uncollected';
 
 function Card() {
   const era = 'black';
   const type = 'inclusion';
   const shop = 'bicycle';
   const name = 'ace';
+  const [ cardStatus, setCardStatus ] = useState<CardStatus>('uncollected');
+
+  const handleCardStatus = (status: CardStatus) => {
+    const currCardStatus = cardStatus;
+    if (currCardStatus === status) {
+      setCardStatus('uncollected');
+    } else {
+      setCardStatus(status);
+    }
+  }
+
 
   return (
     <div className="rounded-lg md:border md:h-36 md:w-64 h-14 w-14">
@@ -37,6 +51,7 @@ function Card() {
             <p>Type: {type}</p>
             <p>Shop: {shop}</p>
             <p>Name: {name}</p>
+            <p>Status: {cardStatus}</p>
           </div>
           <div className="p-1">
             <DropdownMenu>
@@ -48,10 +63,9 @@ function Card() {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Collected</DropdownMenuItem>
-                <DropdownMenuItem>On The Way</DropdownMenuItem>
-                <DropdownMenuItem>Looking</DropdownMenuItem>
-                <DropdownMenuItem>Wishlist</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCardStatus('collected')}>Collected</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCardStatus('otw')}>On The Way</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCardStatus('looking')}>Looking</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -73,12 +87,12 @@ function Card() {
                     <p>Type: {type}</p>
                     <p>Shop: {shop}</p>
                     <p>Name: {name}</p>
+                    <p>Status: {cardStatus}</p>
                   </div>
                   <div className="pl-6 flex flex-col">
-                    <Button>Collected</Button>
-                    <Button>On The Way</Button>
-                    <Button>Looking</Button>
-                    <Button>Wishlist</Button>
+                    <Button onClick={() => handleCardStatus('collected')}>Collected</Button>
+                    <Button onClick={() => handleCardStatus('otw')}>On The Way</Button>
+                    <Button onClick={() => handleCardStatus('looking')}>Looking</Button>
                   </div>
                 </div>
               </DialogDescription>
