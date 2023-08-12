@@ -1,22 +1,7 @@
 import Head from "next/head";
 import { api } from "~/utils/api";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../components/ui/dialog"
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
 
 import { DotsVerticalIcon } from "@radix-ui/react-icons"
 import { Button } from "~/components/ui/button";
@@ -24,12 +9,12 @@ import { useState } from "react";
 
 type CardStatus = 'collected' | 'otw' | 'looking' | 'uncollected';
 
-function Card() {
-  const era = 'black';
-  const type = 'inclusion';
-  const shop = 'bicycle';
-  const name = 'ace';
-  const [ cardStatus, setCardStatus ] = useState<CardStatus>('uncollected');
+interface Card {
+  era: string, type: string, shop: string, name: string, imgUrl: string, status?: CardStatus
+}
+
+function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
+  const [ cardStatus, setCardStatus ] = useState<CardStatus>(status);
 
   const handleCardStatus = (status: CardStatus) => {
     const currCardStatus = cardStatus;
@@ -46,7 +31,7 @@ function Card() {
     <div className="rounded-lg md:border md:h-36 md:w-64 h-14 w-14">
       <div className="hidden md:block">
         <div className="flex flex-row gap-2 group">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" className="object-contain h-14 max-w-full md:h-36 rounded-lg"/>
+          <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg"/>
           <div>
             <p>Era: {era}</p>
             <p>Type: {type}</p>
@@ -104,6 +89,24 @@ function Card() {
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
+  const fakeData: Card[] = [
+    {
+      era: 'black',
+      type: 'inclusion',
+      shop: 'bicycle',
+      name: 'ace',
+      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png'
+    },
+    {
+      era: 'red',
+      type: 'pob',
+      shop: 'bee',
+      name: 'king',
+      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/King_of_hearts_fr.svg/185px-King_of_hearts_fr.svg.png'
+    },
+
+  ];
+
   return (
     <>
       <Head>
@@ -114,7 +117,7 @@ export default function Home() {
       <main className="min-h-screen items-center justify-center">
         <div className="grid grid-cols-4 p-5 gap-4 md:grid-cols-6 md:p-16">
           {
-            Array(100).fill(0).map((i: number) => <Card key={i}/>)
+            Array.from({ length: 50 }, () => fakeData).flat().map((data: Card) => <Card key={data.name} {...data}/>)
           }
         </div>
       </main>
