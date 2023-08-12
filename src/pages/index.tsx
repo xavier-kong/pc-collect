@@ -40,6 +40,7 @@ function Card() {
     }
   }
 
+  const cardStatuses: { status: CardStatus, name: string}[] = [{ status: 'collected', name: 'Collected' }, { status: 'otw', name: 'On The Way'}, { status: 'looking', name: 'Looking' }];
 
   return (
     <div className="rounded-lg md:border md:h-36 md:w-64 h-14 w-14">
@@ -63,9 +64,7 @@ function Card() {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => handleCardStatus('collected')}>Collected</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleCardStatus('otw')}>On The Way</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleCardStatus('looking')}>Looking</DropdownMenuItem>
+                {cardStatuses.map((status) => (<DropdownMenuItem key={status.status} onClick={() => handleCardStatus(status.status)}>{status.name}</DropdownMenuItem>))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -90,9 +89,7 @@ function Card() {
                     <p>Status: {cardStatus}</p>
                   </div>
                   <div className="pl-6 flex flex-col">
-                    <Button onClick={() => handleCardStatus('collected')}>Collected</Button>
-                    <Button onClick={() => handleCardStatus('otw')}>On The Way</Button>
-                    <Button onClick={() => handleCardStatus('looking')}>Looking</Button>
+                    {cardStatuses.map((status) => (<Button key={status.status} variant={cardStatus === status.status ? 'destructive' : null} onClick={() => handleCardStatus(status.status)}>{status.name}</Button>))}
                   </div>
                 </div>
               </DialogDescription>
