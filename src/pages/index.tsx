@@ -5,12 +5,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 
 import { DotsVerticalIcon } from "@radix-ui/react-icons"
 import { Button } from "~/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { MultiSelectComboBox } from '../components/multi-select-combo-box';
 
 type CardStatus = 'collected' | 'otw' | 'looking' | 'uncollected';
 
 interface Card {
-  era: string, type: string, shop: string, name: string, imgUrl: string, status?: CardStatus
+  era: string, type: 'inclusion' | 'pob', shop: string, name: string, imgUrl: string, status: CardStatus
 }
 
 function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
@@ -86,26 +87,32 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
   )
 }
 
+
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const [ eraFilter, setEraFilter ] = useState<string[]>([]);
+  const [ typeFilter, setTypeFilter ] = useState<string[]>([]);
+  const [ shopFilter, setShopFilter ] = useState<string[]>([]);
+  const [ statusFilter, setStatusFilter ] = useState<string[]>([]);
 
-  const fakeData: Card[] = [
+  const fakeData = Array.from({ length: 50}, () => [
     {
       era: 'black',
-      type: 'inclusion',
+      type: 'inclusion' as Card["type"],
       shop: 'bicycle',
       name: 'ace',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png'
+      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png',
+      status: 'looking' as CardStatus
     },
     {
       era: 'red',
-      type: 'pob',
+      type: 'pob' as Card["type"],
       shop: 'bee',
       name: 'king',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/King_of_hearts_fr.svg/185px-King_of_hearts_fr.svg.png'
+      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/King_of_hearts_fr.svg/185px-King_of_hearts_fr.svg.png',
+      status: 'otw' as CardStatus
     },
-
-  ];
+  ]).flat();
 
   return (
     <>
@@ -115,9 +122,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="min-h-screen items-center justify-center">
+        <MultiSelectComboBox options={['pob', 'inclusion']} name="Type" selected={typeFilter} setSelected={setTypeFilter} />
+        <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
+        <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
+        <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
+        <SearchBar />
         <div className="grid grid-cols-4 p-5 gap-4 md:grid-cols-6 md:p-16">
           {
-            Array.from({ length: 50 }, () => fakeData).flat().map((data: Card) => <Card key={data.name} {...data}/>)
+            fakeData
+            .filter((card: Card) => eraFilter.length > 0 ? eraFilter.includes(card.era) : true)
+            .map((data: Card) => <Card key={fakeData.indexOf(data)} {...data}/>)
           }
         </div>
       </main>
