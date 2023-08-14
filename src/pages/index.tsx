@@ -7,6 +7,7 @@ import { DotsVerticalIcon } from "@radix-ui/react-icons"
 import { Button } from "~/components/ui/button";
 import { useEffect, useState } from "react";
 import { MultiSelectComboBox } from '../components/multi-select-combo-box';
+import { Input } from "~/components/ui/input"
 
 type CardStatus = 'collected' | 'otw' | 'looking' | 'uncollected';
 
@@ -87,13 +88,13 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
   )
 }
 
-
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const [ eraFilter, setEraFilter ] = useState<string[]>([]);
   const [ typeFilter, setTypeFilter ] = useState<string[]>([]);
   const [ shopFilter, setShopFilter ] = useState<string[]>([]);
   const [ statusFilter, setStatusFilter ] = useState<string[]>([]);
+  const [ searchFilter, setSearchFilter ] = useState<string>("");
 
   const fakeData = Array.from({ length: 50}, () => [
     {
@@ -114,6 +115,32 @@ export default function Home() {
     },
   ]).flat();
 
+  function checkSearch(card: Card, search: string): boolean {
+    const keys = Object.keys(card);
+
+    for (const key of keys) {
+      if (key === 'status' || key === 'type') {
+        continue;
+      }
+
+      const eraString = card.era.toLowerCase();
+      const shopString = card.shop.toLowerCase();
+      const nameString = card.shop.toLowerCase();
+
+      const searchString = search.toLowerCase();
+
+      if (
+        eraString.includes(searchString) ||
+        shopString.includes(searchString) ||
+        nameString.includes(searchString)
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   return (
     <>
       <Head>
@@ -126,11 +153,15 @@ export default function Home() {
         <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
         <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
         <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
-        <SearchBar />
+        <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} />
         <div className="grid grid-cols-4 p-5 gap-4 md:grid-cols-6 md:p-16">
           {
             fakeData
             .filter((card: Card) => eraFilter.length > 0 ? eraFilter.includes(card.era) : true)
+            .filter((card: Card) => typeFilter.length > 0 ? typeFilter.includes(card.type) : true)
+            .filter((card: Card) => shopFilter.length > 0 ? shopFilter.includes(card.shop) : true)
+            .filter((card: Card) => statusFilter.length > 0 ? statusFilter.includes(card.status) : true)
+            .filter((card: Card) => searchFilter.length > 0 ? checkSearch(card, searchFilter) : true)
             .map((data: Card) => <Card key={fakeData.indexOf(data)} {...data}/>)
           }
         </div>
