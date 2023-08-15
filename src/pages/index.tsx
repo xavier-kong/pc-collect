@@ -33,9 +33,7 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
     <div className="rounded-lg md:border md:h-36 md:w-64 h-14 w-14">
       <div className="hidden md:block">
         <div className="flex flex-row gap-2 group">
-          <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg"/>
-          <div>
-            <p>Era: {era}</p>
+          <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg"/> <div> <p>Era: {era}</p>
             <p>Type: {type}</p>
             <p>Shop: {shop}</p>
             <p>Name: {name}</p>
@@ -149,11 +147,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="min-h-screen items-center justify-center">
-        <MultiSelectComboBox options={['pob', 'inclusion']} name="Type" selected={typeFilter} setSelected={setTypeFilter} />
-        <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
-        <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
-        <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
-        <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} />
+        <div className="flex flex-row items-center align-middle pt-6 justify-center">
+          <MultiSelectComboBox options={['pob', 'inclusion']} name="Type" selected={typeFilter} setSelected={setTypeFilter} />
+          <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
+          <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
+          <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
+          <div className="w-96">
+            <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} />
+          </div>
+        </div>
         <div className="grid grid-cols-4 p-5 gap-4 md:grid-cols-6 md:p-16">
           {
             fakeData
