@@ -43,9 +43,7 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
             <DropdownMenu>
               <DropdownMenuTrigger>          
                 <div className="group-hover:block hidden">
-                  <DotsVerticalIcon className="scale-150 border-none" />
-                </div>
-              </DropdownMenuTrigger>
+                  <DotsVerticalIcon className="scale-150 border-none" /> </div> </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -56,11 +54,11 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
         </div>
       </div>
 
-      <div className="md:hidden block">
+      <div className="md:hidden block flex justify-center items-center align-middle">
         <Dialog>
           <DialogTrigger>
-            <div className="justify-center items-center">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png" className="object-contain h-14 max-w-full md:h-36 rounded-lg"/>
+            <div className="">
+              <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg"/>
             </div>
           </DialogTrigger>
           <DialogContent>
@@ -154,27 +152,25 @@ export default function Home() {
           <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
           <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
           <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
-          <div className="w-96">
-            <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} />
-          </div>
+          <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} className="w-96 m-0" />
         </div>
-        <div className="">
+        <div className="md:hidden block flex items-center justify-center pt-2">
           <Dialog>
             <DialogTrigger>
-              <Button />
+              <div className="border rounded-md px-2 py-1">
+                Filter and Search
+              </div>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Filters</DialogTitle>
                 <DialogDescription>
-                  <div className="items-center justify-center align-middle">
+                  <div className="items-center justify-center align-middle flex flex-col">
                     <MultiSelectComboBox options={['pob', 'inclusion']} name="Type" selected={typeFilter} setSelected={setTypeFilter} />
                     <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
                     <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
                     <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
-                    <div className="w-40">
-                      <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} />
-                    </div>
+                    <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} className="w-40" />
                   </div>
                 </DialogDescription>
               </DialogHeader>
