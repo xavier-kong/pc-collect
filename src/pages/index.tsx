@@ -2,17 +2,20 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
-
 import { DotsVerticalIcon } from "@radix-ui/react-icons"
-import { Button } from "~/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MultiSelectComboBox } from '../components/multi-select-combo-box';
 import { Input } from "~/components/ui/input"
 
 type CardStatus = 'collected' | 'otw' | 'looking' | 'uncollected';
 
 interface Card {
-  era: string, type: 'inclusion' | 'pob', shop: string, name: string, imgUrl: string, status: CardStatus
+  era: string; 
+  type: 'inclusion' | 'pob';
+  shop: string;
+  name: string; 
+  imgUrl: string;
+  status: CardStatus;
 }
 
 function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
@@ -33,23 +36,29 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
     <div className="rounded-lg md:border md:h-36 md:w-64 h-14 w-14">
       <div className="hidden md:block">
         <div className="flex flex-row gap-2 group">
-          <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg"/> <div> <p>Era: {era}</p>
-            <p>Type: {type}</p>
-            <p>Shop: {shop}</p>
-            <p>Name: {name}</p>
-            <p>Status: {cardStatus}</p>
-          </div>
-          <div className="p-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger>          
-                <div className="group-hover:block hidden">
-                  <DotsVerticalIcon className="scale-150 border-none" /> </div> </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {cardStatuses.map((status) => (<DropdownMenuItem key={status.status} onClick={() => handleCardStatus(status.status)}>{status.name}</DropdownMenuItem>))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+          <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg"/> 
+          <div className="flex flex-row flex-1 align-middle">
+            <div className=""> 
+              <p>{era}</p>
+              <p>{type}</p>
+              <p>{shop}</p>
+              <p>{name}</p>
+              <p>{cardStatus}</p>
+            </div>
+            <div className="p-1">
+              <DropdownMenu>
+                <DropdownMenuTrigger>          
+                  <div className="group-hover:block hidden">
+                    <DotsVerticalIcon className="scale-150 border-none" /> 
+                  </div> 
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {cardStatuses.map((status) => (<DropdownMenuItem key={status.status} onClick={() => handleCardStatus(status.status)}>{status.name}</DropdownMenuItem>))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
       </div>
@@ -64,17 +73,31 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Card Info</DialogTitle>
-              <DialogDescription>
-                <div className="flex flex-row gap-4">
-                  <div className="pr-6">
-                    <p>Era: {era}</p>
-                    <p>Type: {type}</p>
-                    <p>Shop: {shop}</p>
-                    <p>Name: {name}</p>
-                    <p>Status: {cardStatus}</p>
-                  </div>
-                  <div className="pl-6 flex flex-col">
-                    {cardStatuses.map((status) => (<Button key={status.status} variant={cardStatus === status.status ? 'destructive' : null} onClick={() => handleCardStatus(status.status)}>{status.name}</Button>))}
+              <DialogDescription className="">
+                <div className="flex flex-row gap-4 align-middle pt-4">
+                  <img src={imgUrl} className="object-contain max-w-full h-28 rounded-lg flex-1"/>
+                  <div className="flex-1 flex-row flex">
+                    <div className="pr-12 flex-3">
+                      <p>{era}</p>
+                      <p>{type}</p>
+                      <p>{shop}</p>
+                      <p>{name}</p>
+                      <p>{cardStatus}</p>
+                    </div>
+                    <div className="p-1 flex-1">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>          
+                          <div className="">
+                            <DotsVerticalIcon className="scale-150 border-none" /> 
+                          </div> 
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          {cardStatuses.map((status) => (<DropdownMenuItem key={status.status} onClick={() => handleCardStatus(status.status)}>{status.name}</DropdownMenuItem>))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                 </div>
               </DialogDescription>
