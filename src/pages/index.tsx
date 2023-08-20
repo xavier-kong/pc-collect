@@ -36,19 +36,19 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
     <div className="rounded-lg md:border md:h-36 md:w-64 h-14 w-14">
       <div className="hidden md:block">
         <div className="flex flex-row gap-2 group">
-          <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg"/> 
-          <div className="flex flex-row flex-1 align-middle">
-            <div className=""> 
+          <img src={imgUrl} className="object-contain h-14 max-w-full md:h-36 rounded-lg flex-1"/> 
+          <div className="flex flex-row flex-1">
+            <div className="p-1 flex-1"> 
               <p>{era}</p>
               <p>{type}</p>
               <p>{shop}</p>
               <p>{name}</p>
               <p>{cardStatus}</p>
             </div>
-            <div className="p-1">
+            <div className="p-1 flex-1 justify-items-end">
               <DropdownMenu>
                 <DropdownMenuTrigger>          
-                  <div className="group-hover:block hidden">
+                  <div className="group-hover:block hidden justify-end justify-items-end">
                     <DotsVerticalIcon className="scale-150 border-none" /> 
                   </div> 
                 </DropdownMenuTrigger>
