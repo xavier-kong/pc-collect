@@ -110,31 +110,14 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
 }
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const cardQuery = api.card.fetch();
+
   const [ eraFilter, setEraFilter ] = useState<string[]>([]);
   const [ typeFilter, setTypeFilter ] = useState<string[]>([]);
   const [ shopFilter, setShopFilter ] = useState<string[]>([]);
   const [ statusFilter, setStatusFilter ] = useState<string[]>([]);
   const [ searchFilter, setSearchFilter ] = useState<string>("");
 
-  const fakeData = Array.from({ length: 50}, () => [
-    {
-      era: 'black',
-      type: 'inclusion' as Card["type"],
-      shop: 'bicycle',
-      name: 'ace',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/530px-Ace_of_spades.svg.png',
-      status: 'looking' as CardStatus
-    },
-    {
-      era: 'red',
-      type: 'pob' as Card["type"],
-      shop: 'bee',
-      name: 'king',
-      imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/King_of_hearts_fr.svg/185px-King_of_hearts_fr.svg.png',
-      status: 'otw' as CardStatus
-    },
-  ]).flat();
 
   function checkSearch(card: Card, search: string): boolean {
     const keys = Object.keys(card);
