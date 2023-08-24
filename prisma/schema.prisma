@@ -29,6 +29,8 @@ model CardCollection {
     id Int @id @default(autoincrement())
     user User @relation(fields: [userId], references: [id])
     userId Int
+    collectionGroup CollectionGroup @relation(fields: [collectionGroupId], references: [id])
+    collectionGroupId Int
     card Card @relation(fields: [cardId], references: [id])
     cardId Int
     status String
