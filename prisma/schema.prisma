@@ -2,44 +2,48 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model Card {
-    id Int @id @default(autoincrement())
-    era String
-    type String
-    shop String
-    name String @unique
-    imgUrl String
-    member String
+  id             Int              @id @default(autoincrement())
+  era            String
+  type           String
+  shop           String
+  name           String           @unique
+  imgUrl         String
+  member         String
+  CardCollection CardCollection[]
 }
 
 model User {
-    id Int @id @default(autoincrement())
-    username String @unique
+  id              Int               @id @default(autoincrement())
+  username        String            @unique
+  CardCollection  CardCollection[]
+  CollectionGroup CollectionGroup[]
 }
 
 model CardCollection {
-    id Int @id @default(autoincrement())
-    user User @relation(fields: [userId], references: [id])
-    userId Int
-    collectionGroup CollectionGroup @relation(fields: [collectionGroupId], references: [id])
-    collectionGroupId Int
-    card Card @relation(fields: [cardId], references: [id])
-    cardId Int
-    status String
-    lastEditedMs Int
+  id                Int             @id @default(autoincrement())
+  user              User            @relation(fields: [userId], references: [id])
+  userId            Int
+  collectionGroup   CollectionGroup @relation(fields: [collectionGroupId], references: [id])
+  collectionGroupId Int
+  card              Card            @relation(fields: [cardId], references: [id])
+  cardId            Int
+  status            String
+  lastEditedMs      Int
 }
 
 model CollectionGroup {
-    id Int @id @default(autoincrement())
-    user User @relation(fields: [userId], references: [id])
-    userId Int
-    member String
+  id             Int              @id @default(autoincrement())
+  user           User             @relation(fields: [userId], references: [id])
+  userId         Int
+  member         String
+  CardCollection CardCollection[]
 }
