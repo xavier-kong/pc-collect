@@ -23,7 +23,7 @@ export const cardRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.example.findMany();
   }),
-  fetch: publicProcedure.query(() => {
+  fetchCards: publicProcedure.query(() => {
     const fakeData = Array.from({ length: 50}, () => [
       {
         era: 'black',

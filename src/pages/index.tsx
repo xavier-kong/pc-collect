@@ -110,7 +110,7 @@ function Card({ era, type, shop, name, imgUrl, status = 'uncollected' }: Card) {
 }
 
 export default function Home() {
-  const cardQuery = api.card.fetch();
+  const cardQuery = api.card.fetchCards.useQuery();
 
   const [ eraFilter, setEraFilter ] = useState<string[]>([]);
   const [ typeFilter, setTypeFilter ] = useState<string[]>([]);
@@ -118,6 +118,11 @@ export default function Home() {
   const [ statusFilter, setStatusFilter ] = useState<string[]>([]);
   const [ searchFilter, setSearchFilter ] = useState<string>("");
 
+  while (cardQuery.isLoading) {
+    return <div>Loading</div>;
+  }
+
+  const cards = cardQuery.data;
 
   function checkSearch(card: Card, search: string): boolean {
     const keys = Object.keys(card);
@@ -156,8 +161,8 @@ export default function Home() {
         <div className="md:block hidden">
           <div className="flex flex-row items-center align-middle pt-6 justify-center">
             <MultiSelectComboBox options={['pob', 'inclusion']} name="Type" selected={typeFilter} setSelected={setTypeFilter} />
-            <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
-            <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
+            <MultiSelectComboBox options={[...new Set(cards?.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
+            <MultiSelectComboBox options={[...new Set(cards?.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
             <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
             <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} className="w-96" />
           </div>
@@ -176,8 +181,8 @@ export default function Home() {
                 <DialogDescription>
                   <div className="items-center justify-center align-middle flex flex-col">
                     <MultiSelectComboBox options={['pob', 'inclusion']} name="Type" selected={typeFilter} setSelected={setTypeFilter} />
-                    <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
-                    <MultiSelectComboBox options={[...new Set(fakeData.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
+                    <MultiSelectComboBox options={[...new Set(cards?.map(data => data.era))]} name="Era" selected={eraFilter} setSelected={setEraFilter} />
+                    <MultiSelectComboBox options={[...new Set(cards?.map(data => data.shop))]} name="Shop" selected={shopFilter} setSelected={setShopFilter} />
                     <MultiSelectComboBox options={['collected', 'otw', 'looking', 'uncollected']} name="Status" selected={statusFilter} setSelected={setStatusFilter} />
                     <Input type="search" placeholder="Search..." onChange={(e) => { setSearchFilter(e.currentTarget.value)}} value={searchFilter} className="w-40" />
                   </div>
@@ -189,13 +194,12 @@ export default function Home() {
 
         <div className="grid grid-cols-4 p-5 gap-4 md:grid-cols-6 md:p-16">
           {
-            fakeData
-            .filter((card: Card) => eraFilter.length > 0 ? eraFilter.includes(card.era) : true)
+            cards?.filter((card: Card) => eraFilter.length > 0 ? eraFilter.includes(card.era) : true)
             .filter((card: Card) => typeFilter.length > 0 ? typeFilter.includes(card.type) : true)
             .filter((card: Card) => shopFilter.length > 0 ? shopFilter.includes(card.shop) : true)
             .filter((card: Card) => statusFilter.length > 0 ? statusFilter.includes(card.status) : true)
             .filter((card: Card) => searchFilter.length > 0 ? checkSearch(card, searchFilter) : true)
-            .map((data: Card) => <Card key={fakeData.indexOf(data)} {...data}/>)
+            .map((data: Card) => <Card key={cards.indexOf(data)} {...data}/>)
           }
         </div>
       </main>
